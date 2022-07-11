@@ -137,14 +137,26 @@ const ScrollableTabView = createReactClass({
     if (Platform.OS === 'ios') {
       const offset = pageNumber * this.state.containerWidth;
       if (this.scrollView) {
-        this.scrollView.getNode().scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
+        if(this.scrollView.getNode()){
+          this.scrollView.getNode().scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
+        }else{
+          this.scrollView.scrollTo({x: offset, y: 0, animated: !this.props.scrollWithoutAnimation, });
+        }
       }
     } else {
       if (this.scrollView) {
         if (this.props.scrollWithoutAnimation) {
-          this.scrollView.getNode().setPageWithoutAnimation(pageNumber);
+          if(this.scrollView.getNode()){
+            this.scrollView.getNode().setPageWithoutAnimation(pageNumber);
+          }else{
+            this.scrollView.setPageWithoutAnimation(pageNumber);
+          }
         } else {
-          this.scrollView.getNode().setPage(pageNumber);
+          if(this.scrollView.getNode()){
+            this.scrollView.getNode().setPage(pageNumber);
+          }else{
+            this.scrollView.setPage(pageNumber);
+          }
         }
       }
     }
